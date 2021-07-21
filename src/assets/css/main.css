@@ -1,5 +1,38 @@
 body{
-    background: #fff;
-    padding: 3rem 4rem;
+    margin: 0;
+    background: #F9F9F9;
+    padding: 0rem 3rem;
     color: #3e3e33;
+}
+
+
+/* Home */
+#content-img-pikachu{
+    width: 206px;
+    height: 206px;
+    background: #F22539;
+    border: 2px solid #000000;
+}
+#img-pikachu{
+    width: 20rem;
+    bottom: 0rem;
+    right: -4.5rem;
+}
+/* Botones */
+.btn-app{
+    line-height: 22px;
+    padding: 8px 20px;
+    position: relative;
+    border-radius: 60px;
+    color:#fff;
+    font-weight: 500;
+}
+#welcome_title, #welcome_paragraph{
+    color:#353535;
+}
+.active{    
+    background: #F22539;
+}
+.inactive{
+    background: #BFBFBF;
 }

@@ -1,8 +1,5 @@
 <template>
   <div id="app">
-    <p class="lead">
-      Pokemón Challenge - Guido Solar
-    </p>
     <Home/>
   </div>
 </template>

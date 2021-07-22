@@ -20,7 +20,9 @@
                         <div class="row mt-2 justify-content-center justify-content-md-between">                                    
                             <div class="col-8"><button type="button" class="btn btn-share active text-center px-3">Share to my friends</button></div>
                             <div class="col-2 p-0 d-md-flex justify-content-md-end">
-                                <span class="content-star d-flex justify-content-center align-items-center rounded-circle"><i class="fas fa-star no-favorito"></i></span>
+                                <span class="content-star d-flex justify-content-center align-items-center rounded-circle">
+									<i class="fas fa-star" v-bind:class="pokemon_favorito.includes(this.name) ? 'favorito' : 'no-favorito' "></i>
+								</span>
                             </div>
                         </div>
                     </div>
@@ -31,6 +33,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
     props: {
 		url: {
@@ -53,7 +56,7 @@ export default {
 			this.axios.get(this.url, { 
 			}).then(response => {
 				// Contener la información en las variables
-				this.name = response.data.name
+				this.name = this.capitalizeFirstLetter(response.data.name)
 				this.weight = response.data.weight
 				this.height = response.data.height
 
@@ -61,9 +64,15 @@ export default {
 				response.data.types.forEach(element => {
 					this.types.push(element.type.name)	
 				});
+				// Formateo los tipos para que aparescan como una cadena string
+				this.types = this.capitalizeFirstLetter(this.types.join(', '))
 				// Guardar la imagen del pokemón
-				this.image = response.data.sprites.front_default
-
+				/* 
+					Se tuvo que usar esta aproximación para poder obtener una imagen con buena calida a mostrar
+					El problema es generado por una propiedad que lleva un "-" (No es recomendado como buena práctica)
+					https://stackoverflow.com/questions/29482226/json-object-with-dash-character-on-element-name
+				*/
+				this.image = response.data["sprites"]["other"]["official-artwork"]["front_default"]
 			}).catch(error => {
 				console.log(error)
 			})
@@ -75,6 +84,8 @@ export default {
         }
 	},
     components: {},
-	computed: {}
+	computed: {
+		...mapState(['pokemon_favorito'])
+	}
 }
 </script>

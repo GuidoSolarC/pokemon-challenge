@@ -11,13 +11,15 @@
 		</div>
 
 		<!-- Listado -->
-		<div class="row mt-4 mt-md-5 justify-content-center" v-if="!searchEmpty && array_pokemon">
-			<div class="col-12 col-md-4">
+		<div class="row mt-4 mt-md-5 mb-5 justify-content-center" v-if="!searchEmpty && array_pokemon">
+			<div class="col-12 col-md-4 mb-5">
 				<ul class="list-group" v-for="poke in array_pokemon" :key="poke.name">
 					<li class="rounded list-group-item d-flex justify-content-between align-items-center border-0 mb-2" 
 						data-bs-toggle="modal" data-bs-target="#modalPokemon" v-on:click="modalPokemon(poke.url)">
-						{{ poke.name }}
-						<span class="content-star d-flex justify-content-center align-items-center rounded-circle"><i class="fas fa-star no-favorito"></i></span>
+						{{ capitalizeFirstLetter(poke.name) }}
+						<span class="content-star d-flex justify-content-center align-items-center rounded-circle" v-on:click="guardarFavorito(poke.name)">
+							<i class="fa fa-star no-favorito"></i>
+						</span>
 					</li>
 				</ul>
 			</div>
@@ -63,26 +65,16 @@
 	</div>
 </template>
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 // Import de componentes
 import Loading from './_loader.vue'
 import ModalPokemon from './_modalPokemon.vue'
 
 export default {
-	data () {
-		return {
-			isLoad: true,
-			// Sin resultados de busqueda, muestro mensaje
-			searchEmpty: false,
-			// Resultado de API 
-			array_pokemon: [],
-			// URL de Pokemón seleccionado
-			url_pokemon: null,
-			// Key modal para update de información
-			keyModal: 0
-		}
-	},	
 	methods: {
+		...mapActions([
+			'agregarQuitarFavoritos'
+		]),
 		// Redirección al home
 		goHome: function(){
 			this.$router.replace({ name: 'Home' })
@@ -100,6 +92,11 @@ export default {
 			}).catch(error => {
 				console.log(error)
 			})
+		},
+		// Guardo pokemon en store
+		guardarFavorito: function(pokemon){
+			this.agregarQuitarFavoritos(pokemon)
+			console.log(this.pokemon_favorito)
 		}
 	},
 	mounted () {
@@ -111,12 +108,25 @@ export default {
             this.isLoad = false         
         }, 1000)
 	},
-    components: {	
+	data () {
+		return {
+			isLoad: true,
+			// Sin resultados de busqueda, muestro mensaje
+			searchEmpty: false,
+			// Resultado de API 
+			array_pokemon: [],
+			// URL de Pokemón seleccionado
+			url_pokemon: null,
+			// Key modal para update de información
+			keyModal: 0
+		}
+	},	
+	components: {	
         Loading,
 		ModalPokemon
 	},
 	computed: {
-        ...mapState(['apiPokemon'])
+        ...mapState(['apiPokemon', 'pokemon_favorito'])
 	}
 }
 </script>

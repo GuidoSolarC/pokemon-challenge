@@ -131,7 +131,9 @@ li{
 .list-group-item span{
     color:#5E5E5E;
 }
-
+.img_pokemon{
+    width: 15rem;
+}
 
 /* Media queries */
 @media (min-width: 576px){

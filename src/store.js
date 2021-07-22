@@ -13,7 +13,7 @@ export default new Vuex.Store({
 	mutations: {
 		updateFavoritos: (state, pokemon) =>{
 			if(state.pokemon_favorito.includes(pokemon)){ // Se quita
-				state.pokemon_favorito = state.pokemon_favorito.filter(e => e !== pokemon);
+				state.pokemon_favorito = state.pokemon_favorito.filter(e => e !== pokemon)
 			} else { // Se agrega				
 				state.pokemon_favorito.push(pokemon)
 			}

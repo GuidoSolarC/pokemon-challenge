@@ -18,7 +18,7 @@
                     </div>
                     <div class="container px-md-5">
                         <div class="row mt-2 justify-content-center justify-content-md-between">                                    
-                            <div class="col-8"><button type="button" class="btn btn-share active text-center px-3">Share to my friends</button></div>
+                            <div class="col-8"><button type="button" class="btn btn-share active text-center px-3" v-on:click="compartirInfo()">Share to my friends</button></div>
                             <div class="col-2 p-0 d-md-flex justify-content-md-end">
 								<span class="content-star favorito d-flex justify-content-center align-items-center rounded-circle" 
 									v-if="pokemon_favorito.includes(name)"
@@ -80,7 +80,12 @@ export default {
 		// Guardo pokemon en store
 		guardarFavorito: function(pokemon){
 			this.agregarQuitarFavoritos(pokemon)
-			console.log(this.pokemon_favorito)
+		},
+		// Compartir información de pokemon (portapapeles)
+		compartirInfo: function(){
+			let clipboard_text = this.name + ', '+ this.weight +', '+ this.height+', '+this.types		
+			// Copio en portapapeles	
+			navigator.clipboard.writeText(clipboard_text)
 		}
 	},
 	mounted () {
@@ -92,8 +97,8 @@ export default {
 		return {
 			// Propiedades del pokemón
 			name: null,
-			weight: null,
-			height: null,
+			weight: 0,
+			height: 0,
 			types: [],
 			image: null
 		}

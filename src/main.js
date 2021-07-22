@@ -18,17 +18,13 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import "@fortawesome/fontawesome-free/js/brands"
 import "@fortawesome/fontawesome-free/js/solid"
 import "@fortawesome/fontawesome-free/js/fontawesome"
-// https://github.com/Inndy/vue-clipboard2
-import VueClipboard from 'vue-clipboard2'
 
 // Custom css
 import "./assets/css/main.css"
 
 Vue.config.productionTip = false
-VueClipboard.config.autoSetContainer = true // add this line
 
 Vue.use(VueAxios, axios)
-Vue.use(VueClipboard)
 
 new Vue({
   router,

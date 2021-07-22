@@ -85,11 +85,11 @@ li{
     height: 40px;
     font-size: 1.5rem;
 }
-.no-favorito{
-    color:#BFBFBF;
+.content-star.favorito > .fa-star{
+    color:#ECA539!important;
 }
-.favorito{
-    color:#ECA539;
+.content-star.no-favorito > .fa-star{
+    color:#BFBFBF!important;
 }
 
 /* Footer */

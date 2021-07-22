@@ -14,12 +14,17 @@
 		<div class="row mt-4 mt-md-5 mb-5 justify-content-center" v-if="!searchEmpty && array_pokemon">
 			<div class="col-12 col-md-4 mb-5">
 				<ul class="list-group" v-for="poke in array_pokemon" :key="poke.name">
-					<li class="rounded list-group-item d-flex justify-content-between align-items-center border-0 mb-2" 
-						data-bs-toggle="modal" data-bs-target="#modalPokemon" v-on:click="modalPokemon(poke.url)">
-						{{ capitalizeFirstLetter(poke.name) }}
-						<span class="content-star d-flex justify-content-center align-items-center rounded-circle" v-on:click="guardarFavorito(poke.name)">
-							<i class="fa fa-star no-favorito"></i>
-						</span>
+					<li class="rounded list-group-item d-flex justify-content-between align-items-center border-0 mb-2">
+						<span data-bs-toggle="modal" data-bs-target="#modalPokemon" v-on:click="modalPokemon(poke.url)">{{ capitalizeFirstLetter(poke.name) }}</span>
+						<span class="content-star favorito d-flex justify-content-center align-items-center rounded-circle" 
+							v-if="pokemon_favorito.includes(poke.name)"
+							v-on:click="guardarFavorito(poke.name)">
+							<i class="fa fa-star"></i>
+						</span>		
+						<span class="content-star no-favorito d-flex justify-content-center align-items-center rounded-circle" 
+							v-on:click="guardarFavorito(poke.name)" v-else>
+							<i class="fa fa-star"></i>
+						</span>			
 					</li>
 				</ul>
 			</div>
@@ -88,7 +93,7 @@ export default {
 		obtenerListado: function () {
 			this.axios.get(this.apiPokemon, { 
 			}).then(response => {
-				this.array_pokemon = response.data.results
+				this.array_pokemon = response.data.results				
 			}).catch(error => {
 				console.log(error)
 			})

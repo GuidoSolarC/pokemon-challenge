@@ -1,5 +1,5 @@
 <template>
-  <div class="content">
+  <div class="container-fluid mb-3 p-0">
     <!-- Imagen pikachu -->
     <div class="row mt-5 justify-content-center">
       <div class="col-4 mt-5 rounded-circle position-relative d-flex justify-content-center align-items-center" id="content-img-pikachu">
@@ -21,55 +21,25 @@
     <!-- Botón "Get Started" -->
     <div class="row mt-4 justify-content-center">
       <div class="col-12 col-md-6 d-flex justify-content-center">
-        <button type="button" class="btn btn-app active">Get started</button>
+          <button type="button" class="btn btn-app active" v-on:click="goListado()">Get started</button>
       </div>
     </div>
   </div>
 </template>
 
-
-<style scoped>
-
-</style>
 <script>
-import { mapState } from 'vuex'
-
 export default {
-	methods: {
-    // Consulto API
-    obtenerListado: function () {
-        this.axios.get(this.apiPokemon, { 
-        }).then(response => {
-          console.log(response.data)
-        })
-        .catch(error => {
-          console.log(error)
-        })
-    },
-    // Consulto API
-    detalle: function () {
-        this.axios.get(this.apiPokemon+'pikachu', { 
-        }).then(response => {
-          console.log(response.data)
-        })
-        .catch(error => {
-          console.log(error)
-        })
+	methods: { 
+    // Redirección al listado
+    goListado:function(){
+      this.$router.replace({ name: 'Listado' })
     }
-	},
-	mounted () {
-    this.obtenerListado()
-    this.detalle()
-	},
+  },
+	mounted () {},
 	data () {
-		return {
-          
-		}
+    return {}
 	},	
-  components: {	
-	},
-	computed: {
-    ...mapState(['apiPokemon'])
-	}
+  components: {	},
+	computed: {	}
 }
 </script>

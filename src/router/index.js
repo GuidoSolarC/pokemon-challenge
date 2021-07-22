@@ -12,6 +12,12 @@ const router = new Router({
 			name: 'Home',
 			component: () => import('@/components/Home')
 		},
+		// Listado con pókemons
+		{
+			path: '/Listado-pokemons',
+			name: 'Listado',
+			component: () => import('@/components/Listado')
+		},
     ]
 })
 

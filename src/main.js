@@ -14,6 +14,11 @@ import VueAxios from 'vue-axios'
 import "bootstrap"
 import "bootstrap/dist/css/bootstrap.min.css"
 
+// https://fontawesome.com
+import "@fortawesome/fontawesome-free/js/brands"
+import "@fortawesome/fontawesome-free/js/solid"
+import "@fortawesome/fontawesome-free/js/fontawesome"
+
 // Custom css
 import "./assets/css/main.css"
 

@@ -18,7 +18,7 @@ npm run serve
 ---
 ### Estructura
 <p>La estructura interna de las carpetas, componentes y recursos quedó de la siguiente manera.</p>
-![image](https://user-images.githubusercontent.com/36977397/126719809-e8d79193-1c12-4eac-abe2-39d4f4d3201c.png)
+<img src="https://user-images.githubusercontent.com/36977397/126719809-e8d79193-1c12-4eac-abe2-39d4f4d3201c.png"/>
 
 ---
 <p>

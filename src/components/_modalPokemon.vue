@@ -59,11 +59,8 @@ export default {
 				this.name = response.data.name
 				this.weight = response.data.weight
 				this.height = response.data.height
-
-				// Recorro los tipos para poder guardarlos
-				response.data.types.forEach(element => {
-					this.types.push(element.type.name)	
-				});
+				// Guardo los tipos
+				this.types = response.data.types.map(obj => obj.type.name)
 				// Formateo los tipos para que aparescan como una cadena string
 				this.types = this.capitalizeFirstLetter(this.types.join(', '))
 				// Guardar la imagen del pokemón

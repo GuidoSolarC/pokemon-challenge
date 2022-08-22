@@ -91,6 +91,9 @@ li{
 .content-star.no-favorito > .fa-star{
     color:#BFBFBF!important;
 }
+.nombrePokemon{
+    cursor: pointer;
+}
 
 /* Footer */
 .footer{

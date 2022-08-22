@@ -11,11 +11,11 @@
 		</div>
 
 		<!-- Listado -->
-		<div class="row mt-4 mt-md-5 mb-5 justify-content-center" v-if="array_pokemon">
-			<div class="col-12 col-md-4 mb-5">
+		<div class="row mt-4 mt-md-5 mb-3 justify-content-center" v-if="array_pokemon">
+			<div class="col-12 col-md-4">
 				<ul class="list-group" v-for="poke in filtroPokemon" :key="poke.name">
 					<li class="rounded list-group-item d-flex justify-content-between align-items-center border-0 mb-2">
-						<span data-bs-toggle="modal" data-bs-target="#modalPokemon" v-on:click="modalPokemon(poke.url)">{{ poke.name ? capitalizeFirstLetter(poke.name) : poke.name }}</span>
+						<span class="nombrePokemon" data-bs-toggle="modal" data-bs-target="#modalPokemon" v-on:click="modalPokemon(poke.url)">{{ poke.name ? capitalizeFirstLetter(poke.name) : poke.name }}</span>
 							<span class="content-star favorito d-flex justify-content-center align-items-center rounded-circle" 
 							v-if="pokemon_favorito.includes(poke.name)"
 							v-on:click="guardarFavorito(poke.name)">
@@ -29,9 +29,18 @@
 				</ul>
 			</div>
 		</div>
+
+		<div class="row justify-content-center" id="content_pagination">
+			<div class="col-6 col-md-2 d-flex justify-content-center align-items-center">
+				<button type="button" class="btn btn-app active"><i class="fas fa-arrow-left"></i> Anterior</button>
+			</div> 
+			<div class="col-6 col-md-2 d-flex justify-content-center align-items-center">
+				<button type="button" class="btn btn-app active">Siguiente <i class="fas fa-arrow-right"></i></button>
+			</div>
+		</div>
 		
 		<!-- Mensaje al no encontrar resultado -->
-		<div class="row mt-4 mt-md-5 justify-content-center" v-if="filtroPokemon.length == 0">
+		<div class="row mt-4 mt-md-5 justify-content-center" v-if="filtroPokemon.length === 0">
 			<div class="row justify-content-center">
 				<div class="col-12 col-md-4">
 					<h3 class="text-center fw-bold">Uh-oh!</h3>
@@ -92,28 +101,26 @@ export default {
 		obtenerListado: function () {
 			this.axios.get(this.apiPokemon, { 
 			}).then(response => {
+				// Guardamos resultado
 				this.array_pokemon = response.data.results	
+				// Contenemos url next y previous
+				this.url_previous = response.data.previous
+				this.url_next = response.data.next
 			}).catch(error => {
 				console.log(error)
 			})
 		},
 		// Alternar listado con favoritos
 		alternarFavoritos: function(prop){
-			if(prop === 'all'){ // Todos
+			if(prop === 'all'){ // Se listan todos
 				this.obtenerListado()
-				this.btn_activo = 'all'
-			} else { // Favoritos
-				let temp = this.array_pokemon
-				this.array_pokemon = []
-				temp.forEach(el => {
-					this.pokemon_favorito.forEach(fav => {
-						if(fav == el.name){
-							this.array_pokemon.push({ name: el.name , url: el.url})
-						}
-					})				
-				})		
-				this.btn_activo = 'fav'		
 			}
+			// Caso contrario, mostramos los favoritos
+			this.array_pokemon = this.array_pokemon.filter((obj) => { 
+				return this.pokemon_favorito.includes(obj.name)
+			})	
+			// Alternamos botón según preferencia
+			this.btn_activo = prop == 'all' ? 'all' : 'fav'
 		},
 		// Guardo pokemon en store
 		guardarFavorito: function(pokemon){
@@ -145,7 +152,10 @@ export default {
 			// Model para buscar
 			search_model: '',
 			// Variable de botones listado, para alternar botón activo, por defecto 'all'
-			btn_activo: 'all'
+			btn_activo: 'all',
+			// URL next y previous
+			url_previous: null,
+			url_next: null
 		}
 	},	
 	components: {	
